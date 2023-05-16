@@ -1,0 +1,15 @@
+﻿@using PhoneStoreApplication.ViewModel
+@model SmallCartViewModel
+
+@if (Model != null)
+{
+    <p>Додані телефони: <span class="badge badge-primary">@Model.NumberOfItems</span></p>
+    <p>Total: <b>@Model.TotalAmount.ToString("C2")</b></p>
+    <a class="btn btn-dark" asp-controller="Cart" asp-action="Index">Деталі</a>
+    <a class="btn btn-outline-danger" asp-controller="Cart" asp-action="Clear">Очистити</a>
+}
+else
+{
+    <p class="lead m-0">Корзина пуста!</p>
+}
+

@@ -1,0 +1,52 @@
+﻿@using PhoneStoreApplication.ViewModel
+@model CartViewModel
+
+@{
+   Layout = "_Layout";
+}
+
+@{
+        ViewData["Title"] = "Cart Overview";
+}
+
+@if (Model.CartPhones.Count > 0)
+{
+        <table class="table">
+                <tr>
+                        <th>Телефон</th>
+                        <th>Кількість</th>
+                        <th></th>
+                        <th>Ціна</th>
+                        <th>Загальна сума</th>
+                </tr>
+                @foreach (var item in Model.CartPhones)
+                {
+                        <tr>
+                                <td>@item.PhoneName</td>
+                                <td>@item.Quantity</td>
+                                <td>
+                                        <a class="btn btn-outline-success btn-sm" asp-action="Add" asp-route-id="@item.PhoneId">+</a>
+                                        <a class="btn btn-outline-danger btn-sm" asp-action="Decrease" asp-route-id="@item.PhoneId">-</a>
+                                        <a class="btn btn-outline-danger btn-sm" asp-action="Remove" asp-route-id="@item.PhoneId">Видалити</a>
+                                </td>
+                                <td>@item.UnitPrice.ToString("C2")</td>
+                                <td>@Model.CartPhones.Where(x => x.PhoneId == item.PhoneId).Sum(x => x.Quantity * x.UnitPrice).ToString("C2")</td>
+                        </tr>
+                }
+                <tr>
+                        <td class="text-right" colspan="4">Grand Total: @Model.GrandTotal.ToString("C2")</td>
+                </tr>
+                <tr>
+                        <td class="text-right" colspan="4">
+                                <a class="btn btn-outline-danger" asp-action="Clear">Очистити корзину</a>
+                                <a class="btn btn-dark" asp-action="Create" asp-controller="Order">Зробити замолення</a>
+                        </td>
+                </tr>
+        </table>
+
+
+}
+else
+{
+        <h3 class="display-4 text-center">Ваша корзина пуста.</h3>
+}
